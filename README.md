@@ -15,5 +15,5 @@ I'm not writing up a doc for him atm, but feel free to ask me in irc2p #i2p-chat
 
 ## How to create a jar
 
-- jar cvfe ChatClient.jar ChatClient *.class net/i2p/data/DataFormatException.class net/i2p/I2PException.class && java -jar ChatClient.jar 
+- jar cvfe ChatClient.jar ChatClient @sources.txt
 
