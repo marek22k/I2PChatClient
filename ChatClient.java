@@ -80,14 +80,14 @@ public class ChatClient extends JFrame
 		bPanel = new JPanel();
 		tPanel = new JPanel();
 		nickLabel = new JLabel();
-		st = new JTextArea();
+		st = new JTextArea(); /* server log area */
 		st.setEditable(false);
 		stsp = new JScrollPane(st);
-		ta = new JTextArea();
+		ta = new JTextArea(); /* text area with all messages */
 		ta.setEditable(false);
 		sp = new JScrollPane(ta);
 
-		tf = new JTextField();
+		tf = new JTextField(); /* message input field */
 		connectButton = new JButton("Connect!");
 		sendButton = new JButton("Send");
 		serverButton = new JButton("Start Server!");
@@ -231,7 +231,10 @@ public class ChatClient extends JFrame
 		{
 			String s = null;
 			while ((s = br.readLine()) != null)
+			{
 				ta.append( String.format("%s%n",s) );
+                ta.setCaretPosition(ta.getDocument().getLength());
+		    }
 		}
 		catch(IOException ex)
 		{	err( String.format("Error occurred during read.%nClosing connection.") );
@@ -303,7 +306,7 @@ public class ChatClient extends JFrame
 			JTextArea ta = new JTextArea(1, 23);
 			ta.setText( server.getDest() );
 			JScrollPane sp = new JScrollPane(ta);
-			message(sp); //Print the base64 string
+			message(sp); // Print the base64 string
 		}	
 	}
 	
@@ -353,7 +356,7 @@ class ChatServer
 			{
 				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream())); //Send to clients
 				bw.write( String.format("%s%n",str) );
-				bw.flush(); //Flush to make sure everything got sent
+				bw.flush(); // Flush to make sure everything got sent
 			}
 			catch(IOException ex)
 			{	err("Error occurred while posting!");	}
@@ -410,8 +413,6 @@ class ChatServer
 				{	log("Error connecting!");	}
 				catch (SocketTimeoutException ex)
 				{	log("Timeout!");	}
-				catch (IOException ex)
-				{	log("General read/write-exception!");	}
 			}
 		}
 
@@ -428,7 +429,7 @@ class ChatServer
 			{
 				try
 				{
-					BufferedReader br = new BufferedReader(new InputStreamReader(sock.getInputStream())); //Receive from clients
+					BufferedReader br = new BufferedReader(new InputStreamReader(sock.getInputStream())); // Receive from clients
 					String line = null;
 					while( true )
 					{
@@ -440,24 +441,11 @@ class ChatServer
 				catch (IOException ex)
 				{	err("General read/write-exception!");	}
 			}
-		}// end inner class ListenThread
+		} // end inner class ListenThread
 
 
-	}// end inner class ClientHandler
+	} // end inner class ClientHandler
 
 
-}// end ChatServer
-
-
-
-
-
-
-
-
-
-
-
-
-
+} // end ChatServer
 
